@@ -21,14 +21,11 @@ A NestJS-based encryption service providing AES and RSA encryption/decryption AP
    cd nestjs-encryption-service
   ```
 2. Install dependencies
-    Using npm : 
-```bash
-npm install
-```
-   Using pnpm : 
-```bash
-npm install
-```
+   ```bash 
+   pnpm i
+  ```
+
+
 3. Generate RSA key pairs (.pem files)
 Run this command once to generate the keys:
 ```bash
