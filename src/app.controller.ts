@@ -2,11 +2,13 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CryptoService } from './crypto/crypto.service';
 import {
+  decryptBodyExample,
   DecryptFailureResponse,
   DecryptSuccessResponse,
+  encryptBodyExample,
   EncryptFailureResponse,
   EncryptSuccessResponse,
-} from './docs/api-response';
+} from './docs';
 import { DecryptDtoSwagger, EncryptDtoSwagger } from './dto';
 import { DecryptDto, decryptSchema, EncryptDto, encryptSchema } from './schema';
 
@@ -16,7 +18,13 @@ export class AppController {
   constructor(private readonly cryptoService: CryptoService) {}
   @Post('/get-encrypt-data')
   @ApiOperation({ summary: 'Encrypt data with AES and RSA' })
-  @ApiBody({ type: EncryptDtoSwagger })
+  @ApiBody({
+    type: EncryptDtoSwagger,
+    required: true,
+    examples: {
+      example: encryptBodyExample.example,
+    },
+  })
   @ApiResponse(EncryptSuccessResponse)
   @ApiResponse(EncryptFailureResponse)
   async encrypt(@Body() body: EncryptDto) {
@@ -57,7 +65,13 @@ export class AppController {
   }
   @Post('/get-decrypt-data')
   @ApiOperation({ summary: 'Decrypt data with RSA and AES' })
-  @ApiBody({ type: DecryptDtoSwagger })
+  @ApiBody({
+    type: DecryptDtoSwagger,
+    required: true,
+    examples: {
+      example: decryptBodyExample.example,
+    },
+  })
   @ApiResponse(DecryptSuccessResponse)
   @ApiResponse(DecryptFailureResponse)
   async decrypt(@Body() body: DecryptDto) {
