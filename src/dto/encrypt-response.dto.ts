@@ -18,3 +18,20 @@ export class EncryptResponseDto {
     data2: string;
   } | null;
 }
+
+export interface EncryptSuccessResponse {
+  successful: true;
+  error_code: '';
+  data: {
+    data1: string;
+    data2: string;
+  };
+}
+
+export interface EncryptFailureResponse {
+  successful: false;
+  error_code: string;
+  data: null;
+}
+
+export type EncryptResponse = EncryptSuccessResponse | EncryptFailureResponse;

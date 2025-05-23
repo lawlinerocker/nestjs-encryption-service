@@ -3,7 +3,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { envSchema } from './config/env';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
@@ -23,4 +23,4 @@ async function bootstrap() {
   console.log(`📘 Swagger docs available at http://localhost:${port}/api-docs`);
 }
 
-bootstrap();
+void bootstrap();

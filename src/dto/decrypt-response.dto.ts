@@ -16,3 +16,18 @@ export class DecryptResponseDto {
     payload: string;
   } | null;
 }
+
+export interface DecryptSuccessResponse {
+  successful: true;
+  error_code: '';
+  data: {
+    payload: string;
+  };
+}
+export interface DecryptFailureResponse {
+  successful: false;
+  error_code: string;
+  data: null;
+}
+
+export type DecryptResponse = DecryptSuccessResponse | DecryptFailureResponse;

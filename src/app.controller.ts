@@ -9,7 +9,12 @@ import {
   EncryptFailureResponse,
   EncryptSuccessResponse,
 } from './docs';
-import { DecryptDtoSwagger, EncryptDtoSwagger } from './dto';
+import {
+  DecryptDtoSwagger,
+  DecryptResponse,
+  EncryptDtoSwagger,
+  EncryptResponse,
+} from './dto';
 import { DecryptDto, decryptSchema, EncryptDto, encryptSchema } from './schema';
 
 @ApiTags('Encryption API')
@@ -27,7 +32,7 @@ export class AppController {
   })
   @ApiResponse(EncryptSuccessResponse)
   @ApiResponse(EncryptFailureResponse)
-  async encrypt(@Body() body: EncryptDto) {
+  encrypt(@Body() body: EncryptDto): EncryptResponse {
     try {
       const parsedBody = encryptSchema.safeParse(body);
       if (!parsedBody.success) {
@@ -58,7 +63,7 @@ export class AppController {
       console.error('Encryption error:', err);
       return {
         successful: false,
-        error_code: err.message,
+        error_code: err instanceof Error ? err.message : String(err),
         data: null,
       };
     }
@@ -74,7 +79,7 @@ export class AppController {
   })
   @ApiResponse(DecryptSuccessResponse)
   @ApiResponse(DecryptFailureResponse)
-  async decrypt(@Body() body: DecryptDto) {
+  decrypt(@Body() body: DecryptDto): DecryptResponse {
     try {
       const parsedBody = decryptSchema.safeParse(body);
       if (!parsedBody.success) {
@@ -104,7 +109,7 @@ export class AppController {
       console.error('Decryption error:', err);
       return {
         successful: false,
-        error_code: err.message,
+        error_code: err instanceof Error ? err.message : String(err),
         data: null,
       };
     }
